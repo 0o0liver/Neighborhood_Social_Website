@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>    
+    <div id="map"></div>
+    <script>
+      // Initialize variables
+      var lat = 0; 
+      var lng = 0; 
+      var map;
+      var marker;
+
+      // Gathering variable
+      var address = sessionStorage.getItem("address");
+      var city = sessionStorage.getItem("city");
+      var state = sessionStorage.getItem("state");
+
+      // Making ajax call
+      $.ajax({
+        method: "GET",
+        url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "," + city + "," + state + "&key=AIzaSyDZc0gy3637LRkkMkw21Ke5-798UeHHowg",
+        dataType: "json",
+        success: successHandler,
+        error: errorHandler
+      });
+
+      // Callback function
+      function successHandler(res, textStatus, xhr){
+        console.log(textStatus);
+        lat = Number(res["results"][0]["geometry"]["location"]["lat"]);
+        lng = Number(res["results"][0]["geometry"]["location"]["lng"]);
+        waiting(initMap);
+      }
+
+      function errorHandler(res, textStatus, xhr){
+        console.log(textStatus);
+      }
+
+      function waiting(callback){
+        console.log("waiting");
+        callback();
+      }
+
+      // Google map 
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: lat, lng: lng},
+          zoom: 17
+        });
+        marker = new google.maps.Marker({
+          position: {lat: lat, lng: lng},
+          map: map
+        }); 
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0gy3637LRkkMkw21Ke5-798UeHHowg&callback=initMap" async defer></script>
+  </body>
+</html>
