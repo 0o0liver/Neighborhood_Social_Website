@@ -34,7 +34,7 @@
       // Making ajax call
       $.ajax({
         method: "GET",
-        url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "," + city + "," + state + "&key=AIzaSyDZc0gy3637LRkkMkw21Ke5-798UeHHowg",
+        url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "," + city + "," + state + "&key=YOUR_API_KEY",
         dataType: "json",
         success: successHandler,
         error: errorHandler
@@ -69,6 +69,6 @@
         }); 
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0gy3637LRkkMkw21Ke5-798UeHHowg&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
   </body>
 </html>
